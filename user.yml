@@ -1,0 +1,18 @@
+---
+- name: Create amit user
+  hosts: demo
+  become: yes
+  become_method: sudo
+  vars:
+    users:
+    - username: amit
+      password: $6$61L3FtwI.4HL2RcJ$Ui0y.bgS0jKVFe.LmkhD4PcQ4sXWmEr8iHn/z4sPaGOmZ1QSpqbbfOPonfJq0fc9.GLczG5JgEBATaDmvq5Ft1
+  tasks:
+    - name: Create user amit
+      user:
+          name: "{{ item.username }}"
+          shell: /bin/bash
+          password: "{{ item.password }}"
+          createhome: yes   
+          home: /home/amit
+      with_items: "{{ users }}"
